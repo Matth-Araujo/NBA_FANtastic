@@ -34,10 +34,12 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -57,7 +59,9 @@ flutter:
   # the material Icons class.
   uses-material-design: true
   assets:
-    - assets/tabela_baskete.png
+    - assets/logo.png
+    - assets/fundo_card.jpeg
+    - assets/fundo_jogador.jpeg
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -87,5 +91,16 @@ flutter:
   #       - asset: fonts/TrajanPro_Bold.ttf
   #         weight: 700
   #
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/to/font-from-package
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/logo_sem_fundo.png"
+  min_sdk_android: 21
+  web:
+    generate: true
+    image_path: "assets/logo_sem_fundo.png"
+  linux:
+    generate: true
+    image_path: "assets/logo_sem_fundo.png"
+
