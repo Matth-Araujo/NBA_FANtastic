@@ -7,6 +7,7 @@ class Player {
   final double avgPoints;
   final double avgRebounds;
   final double avgAssists;
+  final String careerSpan;
 
   Player({
     required this.id,
@@ -17,6 +18,7 @@ class Player {
     this.avgPoints = 0.0,
     this.avgRebounds = 0.0,
     this.avgAssists = 0.0,
+    this.careerSpan = '',
   });
 
   String get firstName => fullName.split(' ').first;
@@ -28,6 +30,19 @@ class Player {
   String get imageUrl =>
       id > 0 ? 'https://cdn.nba.com/headshots/nba/latest/260x190/$id.png' : '';
 
+  int get seasonsCount {
+    final matches = RegExp(r'\b(\d{4})\b')
+        .allMatches(careerSpan)
+        .map((m) => int.parse(m.group(1)!))
+        .toList();
+    if (matches.length >= 2) {
+      final diff = matches.last - matches.first + 1;
+      return diff > 0 ? diff : 1;
+    } else if (matches.length == 1) {
+      return 1;
+    }
+    return 0;
+  }
 
   // Converte o JSON da API em Objeto Flutter
   factory Player.fromJson(Map<String, dynamic> json) {
@@ -44,6 +59,7 @@ class Player {
       avgPoints: (avg?['points'] as num?)?.toDouble() ?? 0.0,
       avgRebounds: (avg?['rebounds'] as num?)?.toDouble() ?? 0.0,
       avgAssists: (avg?['assists'] as num?)?.toDouble() ?? 0.0,
+      careerSpan: json['career_span'] ?? '',
     );
   }
 }
