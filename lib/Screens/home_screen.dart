@@ -13,6 +13,7 @@ import 'package:http/http.dart' as http;
 import '../player_model.dart';
 import '../Widgets/player_card.dart';
 
+import 'player_detail_screen.dart';
 import 'players_screen.dart';
 
 class NbaFantasticScreen extends StatefulWidget {
@@ -40,11 +41,11 @@ class _NbaFantasticScreenState extends State<NbaFantasticScreen> {
 
   String get _apiBaseUrl {
     if (kIsWeb) {
-      return 'http://127.0.0.1:8000';
+      return 'http://127.0.0.1:8000/api/v1';
     } else if (defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://10.0.2.2:8000';
+      return 'http://10.0.2.2:8000/api/v1';
     } else {
-      return 'http://127.0.0.1:8000';
+      return 'http://127.0.0.1:8000/api/v1';
     }
   }
 
@@ -84,7 +85,10 @@ class _NbaFantasticScreenState extends State<NbaFantasticScreen> {
           child: AnimatedContainer(
             duration: const Duration(milliseconds: 220),
             curve: Curves.easeOutCubic,
-            padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 12.0,
+            ),
             decoration: BoxDecoration(
               color: isSelected
                   ? brandOrange.withValues(alpha: 0.16)
@@ -230,14 +234,26 @@ class _NbaFantasticScreenState extends State<NbaFantasticScreen> {
                                       ? 0
                                       : 6.0,
                                 ),
-                                child: PlayerCard(
-                                  name: featuredPlayers[i].fullName,
-                                  pts:
-                                      '${featuredPlayers[i].avgPoints.toStringAsFixed(1)} PTS',
-                                  rebAst:
-                                      '${featuredPlayers[i].avgRebounds.toStringAsFixed(1)} REB • ${featuredPlayers[i].avgAssists.toStringAsFixed(1)} AST',
-                                  imageUrl:
-                                      '$_apiBaseUrl/players/${featuredPlayers[i].id}/image',
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => PlayerDetailScreen(
+                                          player: featuredPlayers[i],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: PlayerCard(
+                                    name: featuredPlayers[i].fullName,
+                                    pts:
+                                        '${featuredPlayers[i].avgPoints.toStringAsFixed(1)} PTS',
+                                    rebAst:
+                                        '${featuredPlayers[i].avgRebounds.toStringAsFixed(1)} REB • ${featuredPlayers[i].avgAssists.toStringAsFixed(1)} AST',
+                                    imageUrl:
+                                        '$_apiBaseUrl/players/${featuredPlayers[i].id}/image',
+                                  ),
                                 ),
                               ),
                           ],
@@ -268,7 +284,7 @@ class _NbaFantasticScreenState extends State<NbaFantasticScreen> {
               elevation: 0,
               title: Row(
                 children: [
-                  Image.asset('assets/logo.png', height: 32),
+                  Image.asset('assets/logo_sem_fundo.png', height: 32),
                   const SizedBox(width: 8),
 
                   RichText(
