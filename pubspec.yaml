@@ -60,6 +60,7 @@ flutter:
   uses-material-design: true
   assets:
     - assets/logo.png
+    - assets/logo_sem_fundo.png
     - assets/fundo_card.jpeg
     - assets/fundo_jogador.jpeg
 

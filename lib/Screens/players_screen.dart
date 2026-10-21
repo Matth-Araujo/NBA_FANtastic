@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../player_model.dart';
+import 'player_detail_screen.dart';
 
 class PlayersScreen extends StatefulWidget {
   const PlayersScreen({super.key});
@@ -50,11 +51,11 @@ class _PlayersScreenState extends State<PlayersScreen> {
 
   String get _apiBaseUrl {
     if (kIsWeb) {
-      return 'http://127.0.0.1:8000';
+      return 'http://127.0.0.1:8000/api/v1';
     } else if (defaultTargetPlatform == TargetPlatform.android) {
-      return 'http://10.0.2.2:8000';
+      return 'http://10.0.2.2:8000/api/v1';
     } else {
-      return 'http://127.0.0.1:8000';
+      return 'http://127.0.0.1:8000/api/v1';
     }
   }
 
@@ -442,7 +443,13 @@ class _PlayersScreenState extends State<PlayersScreen> {
                         ),
                         child: InkWell(
                           onTap: () {
-                            // Navegar para detalhes do jogador
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    PlayerDetailScreen(player: player),
+                              ),
+                            );
                           },
                           child: Row(
                             children: [
